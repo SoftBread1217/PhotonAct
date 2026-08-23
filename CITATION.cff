@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use PhotonAct, cite this software and the original device data."
+title: "PhotonAct"
+type: software
+version: 0.0.1
+date-released: 2026-08-23
+license: MIT
+authors:
+  - name: "PhotonAct contributors"
+repository-code: "https://github.com/SoftBread1217/PhotonAct"
+abstract: "Turn optical-device response curves into differentiable PyTorch activations."

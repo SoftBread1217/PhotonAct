@@ -1,0 +1,12 @@
+{
+  "name": "sample_phh",
+  "input_unit": "normalized_power",
+  "output_unit": "normalized_power",
+  "source": "Synthetic demonstration curve inspired by generic optical bistability; not digitized experimental or paper data.",
+  "valid_min": 0.0,
+  "valid_max": 2.0,
+  "normalized": true,
+  "license": "CC0-1.0",
+  "citation": "No citation required; replace with your measured or simulated data.",
+  "notes": "The up/down branches are intentionally distinct to demonstrate hysteresis semantics."
+}

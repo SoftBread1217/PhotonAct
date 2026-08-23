@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+  <title id="title">PhotonAct v0.0.1 workflow</title>
+  <desc id="desc">A documented device curve becomes a differentiable PyTorch module and supports backpropagation.</desc>
+  <rect width="900" height="220" rx="20" fill="#f5f8ff"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g transform="translate(45 40)">
+      <rect width="210" height="140" rx="16" fill="#fff" stroke="#5271ff" stroke-width="3"/>
+      <polyline points="30,98 70,90 110,70 150,35 180,25" fill="none" stroke="#5271ff" stroke-width="5"/>
+      <text x="105" y="122" font-size="18" font-weight="700" fill="#19233c">CSV / JSON curve</text>
+    </g>
+    <text x="305" y="120" font-size="36" fill="#5271ff">→</text>
+    <g transform="translate(350 40)">
+      <rect width="210" height="140" rx="16" fill="#fff" stroke="#13a97b" stroke-width="3"/>
+      <text x="105" y="60" font-size="21" font-weight="700" fill="#19233c">CurveActivation</text>
+      <text x="105" y="91" font-size="16" fill="#526077">torch.nn.Module</text>
+      <text x="105" y="116" font-size="16" fill="#526077">linear interpolation</text>
+    </g>
+    <text x="610" y="120" font-size="36" fill="#5271ff">→</text>
+    <g transform="translate(655 40)">
+      <rect width="200" height="140" rx="16" fill="#19233c"/>
+      <text x="100" y="62" font-size="21" font-weight="700" fill="#fff">PyTorch autograd</text>
+      <text x="100" y="94" font-size="16" fill="#cbd6f7">forward()</text>
+      <text x="100" y="119" font-size="16" fill="#cbd6f7">backward()</text>
+    </g>
+  </g>
+</svg>

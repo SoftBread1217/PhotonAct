@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "photonact"
+version = "0.0.1"
+description = "Turn optical device response curves into differentiable PyTorch activations."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "PhotonAct contributors" }]
+keywords = ["photonics", "pytorch", "hardware-aware-ml", "nonlinear-optics"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "torch>=2.1",
+]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.10", "pytest>=8", "ruff>=0.12"]
+notebook = ["jupyterlab>=4", "matplotlib>=3.7"]
+
+[project.scripts]
+photonact = "photonact.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["photonact*"]
+
+[tool.setuptools.package-data]
+photonact = ["data/*.csv", "data/*.json"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["work"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+packages = ["photonact"]

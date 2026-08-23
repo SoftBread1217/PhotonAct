@@ -1,0 +1,13 @@
+input_power,output_power,branch
+0.0,0.00,up
+0.4,0.04,up
+0.8,0.12,up
+1.2,0.30,up
+1.6,0.72,up
+2.0,0.90,up
+0.0,0.00,down
+0.4,0.08,down
+0.8,0.32,down
+1.2,0.70,down
+1.6,0.84,down
+2.0,0.90,down
