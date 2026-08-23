@@ -11,18 +11,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-      - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e ".[dev]"
-      - run: ruff check .
-      - run: mypy photonact
-      - run: pytest
-      - run: python examples/minimal.py
-      - run: photonact inspect examples/curves/sample_phh.csv
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+      - name: Install CPU-only PyTorch
+        run: python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
+      - name: Install PhotonAct and development tools
+        run: python -m pip install -e ".[dev]"
+      - name: Check formatting and lint
+        run: ruff check .
+      - name: Check types
+        run: mypy photonact
+      - name: Run tests
+        run: pytest
+      - name: Run minimal backward example
+        run: python examples/minimal.py
+      - name: Inspect bundled curve
+        run: photonact inspect examples/curves/sample_phh.csv
