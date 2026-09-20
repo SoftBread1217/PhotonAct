@@ -1,7 +1,9 @@
 # Contributing to PhotonAct
 
-Thank you for improving PhotonAct. Open an issue before a large architectural change. Keep pull
-requests focused, add tests, and run `pytest`, `ruff check .`, and `mypy photonact`.
+Thank you for improving PhotonAct. Use the bug or feature issue template so proposed work includes
+enough context to evaluate. Open an issue before a large architectural change and check the
+[roadmap](docs/roadmap.md) for the intended project boundary. Keep pull requests focused, add tests,
+and run `pytest`, `ruff check .`, and `mypy photonact`.
 
 Device curves require metadata with units, valid range, provenance, and license. Explicitly label data
 as measured, simulated, digitized, or synthetic. Do not submit private, restricted, or unverifiable

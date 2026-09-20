@@ -2,6 +2,10 @@
 
 **PhotonAct turns measured or simulated optical-device response curves into differentiable PyTorch activation functions.**
 
+[![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ![PhotonAct workflow](assets/workflow.svg)
 
 ```bash
@@ -20,9 +24,9 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-> **Status:** learning-focused v0.0.1. The bundled `sample_phh` curve is synthetic demonstration
-> data, not experimental data and not digitized from a paper. PhotonAct currently loads curves and
-> performs differentiable interpolation; benchmarking and hardware effects are roadmap items.
+> **Status:** early-alpha v0.0.1. Curve loading, validation, differentiable interpolation, the CLI,
+> and package installation are tested on Python 3.10-3.12. The bundled `sample_phh` curve is
+> synthetic demonstration data, not experimental data and not digitized from a paper.
 
 [中文说明](README_zh.md)
 
@@ -36,6 +40,19 @@ documented CSV or JSON -> validated curve -> torch.nn.Module -> autograd
 ```
 
 It does not include an electromagnetic simulator and does not invent unavailable device data.
+
+## Scope and Non-Goals
+
+PhotonAct focuses on the boundary between an optical response curve and a machine-learning model:
+
+- validate documented measured, simulated, digitized, or synthetic curve data;
+- expose the curve as a small, differentiable `torch.nn.Module`;
+- make branch selection, extrapolation, normalization, and future hardware effects explicit; and
+- provide reproducible benchmarks whose configurations and raw results can be audited.
+
+PhotonAct is not an electromagnetic solver, a substitute for device characterization, or evidence
+that a model matches physical hardware without documented provenance. It does not claim to reproduce
+the motivating paper while that paper's underlying curve data remain unavailable.
 
 ## Installation
 
@@ -113,13 +130,7 @@ appropriately licensed measured, simulated, or digitized data and record its pro
 
 ## Roadmap
 
-The project grows one understandable step at a time:
-
-- v0.0.1: CSV/JSON loading, differentiable curve layer, metadata, inspection CLI, tests
-- v0.1: explicit stateful/stateless hysteresis semantics
-- v0.2: noise, quantization, dynamic range, insertion loss, and drift
-- v0.3: reproducible MNIST and Fashion-MNIST comparison benchmark
-- Later: reports, CIFAR-10 recipe, and an interactive curve explorer
+See the milestone definitions and evidence requirements in [docs/roadmap.md](docs/roadmap.md).
 
 ## Contributing, Citation, and License
 

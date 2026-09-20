@@ -1,0 +1,50 @@
+name: Bug report
+description: Report reproducible incorrect behavior in PhotonAct
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve PhotonAct. Do not upload private or restricted curve data.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include the shortest code or command that reproduces the problem.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: PhotonAct version or commit
+      placeholder: 0.0.1 or a5fb3ea
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python version, PyTorch version, and CPU/GPU.
+      placeholder: Windows 11, Python 3.12, PyTorch 2.x, CPU
+    validations:
+      required: true
+  - type: textarea
+    id: curve
+    attributes:
+      label: Curve-data context
+      description: State whether the data are synthetic, measured, simulated, or digitized. Share only data you may disclose.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Paste the complete traceback or relevant log.
+      render: text

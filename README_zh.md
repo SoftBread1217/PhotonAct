@@ -2,6 +2,10 @@
 
 **PhotonAct 将测量或仿真的光学器件响应曲线转换成可微的 PyTorch 激活函数。**
 
+[![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ![PhotonAct 工作流程](assets/workflow.svg)
 
 ```bash
@@ -10,8 +14,9 @@ photonact inspect examples/curves/sample_phh.csv
 python examples/minimal.py
 ```
 
-> **当前状态：** 适合学习的 v0.0.1。内置 `sample_phh` 是人工编写的合成演示曲线，
-> 不是实验数据，也不是从论文图片数字化得到的数据。硬件噪声和基准测试暂时放在路线图中。
+> **当前状态：** 早期测试版 v0.0.1。曲线读取、数据检查、可微插值、命令行工具和安装包已在
+> Python 3.10-3.12 上测试。内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，
+> 也不是从论文图片数字化得到的数据。
 
 [English README](README.md)
 
@@ -55,13 +60,18 @@ v0.0.1 使用可微的分段线性插值，因为它比高阶样条更容易阅�
 相关论文说明底层曲线数据暂未公开，因此本项目不附带论文曲线，也不声称复现论文准确率。
 `sample_phh` 仅用于展示接口，使用自己的数据时必须如实记录测量、仿真或数字化来源。
 
+## 项目边界
+
+PhotonAct 专注于连接“光学响应曲线”和“机器学习模型”：检查带有来源说明的曲线数据，将曲线
+封装成小型可微 `torch.nn.Module`，明确分支、外推、归一化和未来硬件效应的语义，并提供可以
+审计配置和原始结果的可复现实验。
+
+PhotonAct 不是电磁场求解器，不能代替器件表征，也不会在缺少来源证据时声称模型与真实硬件
+一致。论文底层曲线数据尚未公开时，本项目不会声称完整复现该论文。
+
 ## 路线图
 
-- v0.0.1：曲线读取、可微激活层、元数据、检查命令、测试
-- v0.1：明确的有状态/无状态迟滞语义
-- v0.2：噪声、量化、动态范围、插入损耗和漂移
-- v0.3：可复现的 MNIST/Fashion-MNIST 基准
-- 后续：报告、CIFAR-10 配方和交互式曲线查看器
+各版本目标和验收证据见 [docs/roadmap.md](docs/roadmap.md)。
 
 代码采用 [MIT License](LICENSE)。贡献说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，引用信息见
 [CITATION.cff](CITATION.cff)。

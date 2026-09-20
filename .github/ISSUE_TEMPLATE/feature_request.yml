@@ -1,0 +1,31 @@
+name: Feature request
+description: Propose a focused capability or scientific use case
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or research need
+      description: Explain the concrete workflow that is currently difficult or impossible.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe inputs, outputs, semantics, and any important edge cases.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Validation evidence
+      description: How should tests or a reproducible example demonstrate that the feature works?
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Data and citation requirements
+      description: List required datasets, licenses, papers, or device assumptions. Do not submit restricted data.
