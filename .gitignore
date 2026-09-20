@@ -10,7 +10,7 @@ __pycache__/
 htmlcov/
 build/
 dist/
-data/
+/data/
 runs/
 work/
 *.pt
