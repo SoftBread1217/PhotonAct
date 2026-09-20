@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,12 +8,11 @@ version = "0.0.1"
 description = "Turn optical device response curves into differentiable PyTorch activations."
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
-license = { text = "MIT" }
-authors = [{ name = "PhotonAct contributors" }]
+license = "MIT"
+authors = [{ name = "Boyang Duan", email = "duanboyang@bupt.edu.cn" }]
 keywords = ["photonics", "pytorch", "hardware-aware-ml", "nonlinear-optics"]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -21,6 +20,12 @@ classifiers = [
 dependencies = [
   "torch>=2.1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/SoftBread1217/PhotonAct"
+Repository = "https://github.com/SoftBread1217/PhotonAct"
+Issues = "https://github.com/SoftBread1217/PhotonAct/issues"
+Changelog = "https://github.com/SoftBread1217/PhotonAct/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = ["mypy>=1.10,<2", "pytest>=8,<9", "ruff>=0.12,<0.13"]

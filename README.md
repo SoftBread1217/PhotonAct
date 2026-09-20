@@ -121,9 +121,9 @@ default. See [examples/minimal.py](examples/minimal.py) and the
 ## Data and Paper Boundary
 
 The research motivation includes *Optical Bistability in Photonic Topological Hypercrystals and Its
-Applications in Photonic Neural Network* (Nanomaterials 2026, 16, 561). Its underlying curve data are
-not publicly available. PhotonAct therefore does not ship or claim to reproduce those data or the
-paper's accuracy results.
+Applications in Photonic Neural Network* ([Nanomaterials 2026, 16, 561](https://doi.org/10.3390/nano16090561)).
+Its underlying curve data are not publicly available. PhotonAct therefore does not ship or claim to
+reproduce those data or the paper's accuracy results.
 
 `sample_phh` is a hand-authored synthetic example with separated up/down branches. Replace it with
 appropriately licensed measured, simulated, or digitized data and record its provenance.
@@ -134,6 +134,7 @@ See the milestone definitions and evidence requirements in [docs/roadmap.md](doc
 
 ## Contributing, Citation, and License
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Cite PhotonAct with [CITATION.cff](CITATION.cff) and cite
-device data separately. Code is released under the [MIT License](LICENSE); data may declare a
-different license in metadata.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and
+[CHANGELOG.md](CHANGELOG.md). Cite PhotonAct with [CITATION.cff](CITATION.cff) and cite device data
+separately. Code is released under the [MIT License](LICENSE); data may declare a different license
+in metadata.

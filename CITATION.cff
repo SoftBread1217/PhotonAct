@@ -1,11 +1,42 @@
 cff-version: 1.2.0
-message: "If you use PhotonAct, cite this software and the original device data."
+message: "If you use PhotonAct, cite this software and cite the source of your device data separately."
 title: "PhotonAct"
 type: software
 version: 0.0.1
-date-released: 2026-08-23
+date-released: "2026-09-20"
 license: MIT
 authors:
-  - name: "PhotonAct contributors"
+  - family-names: "Duan"
+    given-names: "Boyang"
+    email: "duanboyang@bupt.edu.cn"
 repository-code: "https://github.com/SoftBread1217/PhotonAct"
 abstract: "Turn optical-device response curves into differentiable PyTorch activations."
+keywords:
+  - "photonics"
+  - "PyTorch"
+  - "hardware-aware machine learning"
+  - "nonlinear optics"
+references:
+  - type: article
+    title: "Optical Bistability in Photonic Topological Hypercrystals and Its Applications in Photonic Neural Network"
+    authors:
+      - family-names: "Li"
+        given-names: "Hanli"
+      - family-names: "Duan"
+        given-names: "Boyang"
+      - family-names: "Zhu"
+        given-names: "Tianyu"
+      - family-names: "Shan"
+        given-names: "Sichao"
+      - family-names: "Lin"
+        given-names: "Liqian"
+      - family-names: "Li"
+        given-names: "Changjun"
+      - family-names: "Li"
+        given-names: "Zhitong"
+    journal: "Nanomaterials"
+    year: 2026
+    volume: 16
+    issue: 9
+    doi: "10.3390/nano16090561"
+    scope: "Research motivation; PhotonAct does not reproduce the paper's unavailable underlying curve data."

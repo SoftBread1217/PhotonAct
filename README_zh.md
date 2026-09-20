@@ -57,7 +57,9 @@ CSV 至少包含 `input_power` 和 `output_power`，可选 `branch`。同一分�
 v0.0.1 使用可微的分段线性插值，因为它比高阶样条更容易阅读、测试和解释。多分支曲线必须明确
 选择分支；超出范围可选择 `clamp`、`linear` 或 `error`。
 
-相关论文说明底层曲线数据暂未公开，因此本项目不附带论文曲线，也不声称复现论文准确率。
+相关论文 [*Optical Bistability in Photonic Topological Hypercrystals and Its Applications in
+Photonic Neural Network*](https://doi.org/10.3390/nano16090561) 的底层曲线数据暂未公开，因此
+本项目不附带论文曲线，也不声称复现论文准确率。
 `sample_phh` 仅用于展示接口，使用自己的数据时必须如实记录测量、仿真或数字化来源。
 
 ## 项目边界
@@ -73,5 +75,6 @@ PhotonAct 不是电磁场求解器，不能代替器件表征，也不会在缺�
 
 各版本目标和验收证据见 [docs/roadmap.md](docs/roadmap.md)。
 
-代码采用 [MIT License](LICENSE)。贡献说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，引用信息见
+代码采用 [MIT License](LICENSE)。贡献说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全问题报告
+方式见 [SECURITY.md](SECURITY.md)，版本变化见 [CHANGELOG.md](CHANGELOG.md)，引用信息见
 [CITATION.cff](CITATION.cff)。
