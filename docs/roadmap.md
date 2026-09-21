@@ -28,7 +28,7 @@ Current foundation:
 Before v0.1, add user-facing error examples, stabilize the curve-data specification, and publish a
 small release with complete author and citation metadata.
 
-## v0.1 - Hysteresis Semantics (release validation)
+## v0.1 - Hysteresis Semantics (complete)
 
 - separate `CurveActivation` and explicit-state `HysteresisActivation` APIs;
 - deterministic lower/upper threshold transitions and documented reset behavior;
@@ -36,8 +36,8 @@ small release with complete author and citation metadata.
 - metadata for data kind, response quantity, wavelength, polarization, and thresholds; and
 - a deterministic, Git-ignored workflow for preparing legitimately held Figure 4(b) workbook data.
 
-The implementation is complete locally. Public release still requires the normal CI/build checks;
-publishing any derived research data separately requires an approved data license.
+The implementation, documentation, tests, and package build are complete. Publishing any derived
+research data separately still requires an approved data license.
 
 ## v0.2 - Hardware Effects
 

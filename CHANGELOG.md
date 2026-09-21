@@ -6,6 +6,12 @@ All notable changes to PhotonAct are documented in this file. The format follows
 
 ## [Unreleased]
 
+### Planned
+
+- Add reproducible comparison benchmarks with auditable raw results in v0.3.
+
+## [0.1.0] - 2026-09-21
+
 ### Added
 
 - Explicit-state `HysteresisActivation` with deterministic lower/upper threshold switching,
@@ -22,10 +28,6 @@ All notable changes to PhotonAct are documented in this file. The format follows
 - Reject non-finite curve points and activation inputs.
 - Mark bundled `sample_phh` data explicitly as synthetic and add demonstration thresholds.
 
-### Planned
-
-- Add reproducible comparison benchmarks with auditable raw results in v0.3.
-
 ## [0.0.1] - 2026-09-20
 
 ### Added
@@ -39,5 +41,6 @@ All notable changes to PhotonAct are documented in this file. The format follows
 - English and Chinese documentation, contribution guidance, citation metadata, a security policy,
   and a milestone-based roadmap.
 
-[Unreleased]: https://github.com/SoftBread1217/PhotonAct/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/SoftBread1217/PhotonAct/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/SoftBread1217/PhotonAct/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/SoftBread1217/PhotonAct/releases/tag/v0.0.1

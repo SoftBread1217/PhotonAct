@@ -26,8 +26,8 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-> **Status:** v0.1.0 is under release validation. The stateless curve layer and the new
-> explicit-state hysteresis layer are tested on Python 3.10-3.12. The bundled `sample_phh` curve is
+> **Status:** v0.1.0. The stateless curve layer and the explicit-state hysteresis layer are tested
+> on Python 3.10-3.12. The bundled `sample_phh` curve is
 > synthetic demonstration data, not experimental data and not digitized from a paper.
 
 [中文说明](README_zh.md)
