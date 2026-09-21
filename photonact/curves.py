@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 from dataclasses import asdict, dataclass, fields
+from math import isfinite
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +24,12 @@ class CurveMetadata:
     license: str = "unspecified"
     citation: str = ""
     notes: str = ""
+    data_kind: str = "unspecified"
+    response_quantity: str = "output_power"
+    wavelength_nm: float | None = None
+    polarization: str = ""
+    lower_threshold: float | None = None
+    upper_threshold: float | None = None
 
     @classmethod
     def from_dict(cls, values: dict[str, Any]) -> CurveMetadata:
@@ -105,15 +112,30 @@ def load_curve(path: str | Path) -> CurveData:
         y = [float(point["output_power"]) for point in points]
     except (KeyError, TypeError, ValueError) as error:
         raise ValueError("Every point needs numeric input_power and output_power") from error
+    if not all(isfinite(value) for value in [*x, *y]):
+        raise ValueError("Curve points must be finite")
     branches = [str(point.get("branch", "single")).strip().lower() for point in points]
+    if any(not branch for branch in branches):
+        raise ValueError("Branch labels must not be empty")
     metadata = CurveMetadata.from_dict(metadata_values)
     valid_min = min(x) if metadata.valid_min is None else metadata.valid_min
     valid_max = max(x) if metadata.valid_max is None else metadata.valid_max
+    if not isfinite(valid_min) or not isfinite(valid_max):
+        raise ValueError("Metadata valid range must be finite")
     if valid_min > min(x) or valid_max < max(x) or valid_min >= valid_max:
         raise ValueError("Metadata valid range must contain all curve points")
     metadata = CurveMetadata.from_dict(
         {**metadata.to_dict(), "valid_min": valid_min, "valid_max": valid_max}
     )
+    lower = metadata.lower_threshold
+    upper = metadata.upper_threshold
+    if (lower is None) != (upper is None):
+        raise ValueError("Metadata must provide both hysteresis thresholds or neither")
+    if lower is not None and upper is not None:
+        if not all(isfinite(value) for value in (lower, upper)):
+            raise ValueError("Hysteresis thresholds must be finite")
+        if not valid_min <= lower < upper <= valid_max:
+            raise ValueError("Hysteresis thresholds must be ordered inside the valid range")
     for branch in set(branches):
         branch_x = [value for value, label in zip(x, branches, strict=True) if label == branch]
         if len(branch_x) < 2 or any(a >= b for a, b in zip(branch_x, branch_x[1:], strict=False)):

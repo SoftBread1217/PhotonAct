@@ -1,6 +1,7 @@
 # PhotonAct
 
-**PhotonAct turns measured or simulated optical-device response curves into differentiable PyTorch activation functions.**
+**PhotonAct turns measured or simulated optical-device response curves into differentiable,
+hysteresis-aware PyTorch activation functions.**
 
 [![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
@@ -12,6 +13,7 @@
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
 python examples/minimal.py
+python examples/hysteresis.py
 ```
 
 ```python
@@ -24,8 +26,8 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-> **Status:** early-alpha v0.0.1. Curve loading, validation, differentiable interpolation, the CLI,
-> and package installation are tested on Python 3.10-3.12. The bundled `sample_phh` curve is
+> **Status:** v0.1.0 is under release validation. The stateless curve layer and the new
+> explicit-state hysteresis layer are tested on Python 3.10-3.12. The bundled `sample_phh` curve is
 > synthetic demonstration data, not experimental data and not digitized from a paper.
 
 [中文说明](README_zh.md)
@@ -36,7 +38,7 @@ Researchers often have discrete input/output power points but no simple way to u
 PyTorch model. PhotonAct provides the smallest useful bridge:
 
 ```text
-documented CSV or JSON -> validated curve -> torch.nn.Module -> autograd
+documented CSV or JSON -> validated branches -> torch.nn.Module -> autograd
 ```
 
 It does not include an electromagnetic simulator and does not invent unavailable device data.
@@ -47,7 +49,8 @@ PhotonAct focuses on the boundary between an optical response curve and a machin
 
 - validate documented measured, simulated, digitized, or synthetic curve data;
 - expose the curve as a small, differentiable `torch.nn.Module`;
-- make branch selection, extrapolation, normalization, and future hardware effects explicit; and
+- make branch selection, hysteresis state, extrapolation, normalization, and future hardware effects
+  explicit; and
 - provide reproducible benchmarks whose configurations and raw results can be audited.
 
 PhotonAct is not an electromagnetic solver, a substitute for device characterization, or evidence
@@ -107,6 +110,27 @@ stored in `device.meta.json`:
 JSON may contain `{"metadata": {...}, "points": [...]}` or just a list of points. See
 [docs/curve_data.md](docs/curve_data.md).
 
+## Stateful Hysteresis
+
+`HysteresisActivation` switches between the increasing-scan (`up`) and decreasing-scan (`down`)
+curves with explicit state. The module never hides trajectory state inside a global or persistent
+attribute: each step receives the previous state and returns the next one.
+
+```python
+import torch
+from photonact import HysteresisActivation
+
+layer = HysteresisActivation.from_file("examples/curves/sample_phh.csv")
+x = torch.tensor([0.2, 1.0, 1.8, 1.0, 0.2], requires_grad=True)
+y, state_history = layer.forward_sequence(x, initial_state=False)
+y.sum().backward()
+```
+
+At or above `upper_threshold`, the state switches high and selects the `down` branch. At or below
+`lower_threshold`, it switches low and selects the `up` branch. Between those thresholds it retains
+the supplied state. See [docs/hysteresis.md](docs/hysteresis.md) for batched inputs, reset behavior,
+and gradient semantics.
+
 ## Interpolation Semantics
 
 `CurveActivation` uses differentiable piecewise-linear interpolation. This is easier to inspect and
@@ -122,11 +146,25 @@ default. See [examples/minimal.py](examples/minimal.py) and the
 
 The research motivation includes *Optical Bistability in Photonic Topological Hypercrystals and Its
 Applications in Photonic Neural Network* ([Nanomaterials 2026, 16, 561](https://doi.org/10.3390/nano16090561)).
-Its underlying curve data are not publicly available. PhotonAct therefore does not ship or claim to
-reproduce those data or the paper's accuracy results.
+The repository does not ship that paper's underlying data and does not claim to reproduce its
+accuracy results.
 
 `sample_phh` is a hand-authored synthetic example with separated up/down branches. Replace it with
 appropriately licensed measured, simulated, or digitized data and record its provenance.
+
+Authors who have legitimate access to the Figure 4(b) source workbook can prepare a private local
+curve without modifying the workbook:
+
+```bash
+python -m pip install -e ".[data]"
+python scripts/prepare_phh_1535nm.py path/to/shuangwentiai.xlsx
+python examples/hysteresis.py --curve local_data/phh_1535nm/phh_1535nm.csv
+```
+
+The converter records the source SHA-256, provenance, wavelength, polarization, transition
+intervals, and output-power calculation. Its default destination, `local_data/`, is Git-ignored.
+Do not publish the generated files until every relevant author or rights holder has approved the
+data license.
 
 ## Roadmap
 

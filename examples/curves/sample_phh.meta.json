@@ -8,5 +8,9 @@
   "normalized": true,
   "license": "CC0-1.0",
   "citation": "No citation required; replace with your measured or simulated data.",
-  "notes": "The up/down branches are intentionally distinct to demonstrate hysteresis semantics."
+  "notes": "The up/down branches are intentionally distinct to demonstrate hysteresis semantics.",
+  "data_kind": "synthetic",
+  "response_quantity": "normalized_output_power",
+  "lower_threshold": 0.6,
+  "upper_threshold": 1.4
 }

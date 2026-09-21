@@ -1,6 +1,6 @@
 # PhotonAct
 
-**PhotonAct 将测量或仿真的光学器件响应曲线转换成可微的 PyTorch 激活函数。**
+**PhotonAct 将测量或仿真的光学器件响应曲线转换成可微、支持双稳态轨迹的 PyTorch 激活函数。**
 
 [![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
@@ -12,9 +12,10 @@
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
 python examples/minimal.py
+python examples/hysteresis.py
 ```
 
-> **当前状态：** 早期测试版 v0.0.1。曲线读取、数据检查、可微插值、命令行工具和安装包已在
+> **当前状态：** v0.1.0 正在进行发布前验证。无状态曲线层和新增的显式状态双稳态层已在
 > Python 3.10-3.12 上测试。内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，
 > 也不是从论文图片数字化得到的数据。
 
@@ -22,10 +23,11 @@ python examples/minimal.py
 
 ## 现在能做什么
 
-第一版只建立一个完整而容易理解的闭环：
+项目现在建立了两个清晰的使用层次：
 
 ```text
-CSV/JSON 曲线 -> 数据检查 -> CurveActivation -> PyTorch 自动求导
+单分支响应：CSV/JSON -> CurveActivation -> PyTorch 自动求导
+双稳态轨迹：上下扫描分支 + 阈值 + 上一步状态 -> HysteresisActivation
 ```
 
 ```python
@@ -38,13 +40,30 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
+如果器件有迟滞回线，可以让状态随输入轨迹切换：
+
+```python
+import torch
+from photonact import HysteresisActivation
+
+layer = HysteresisActivation.from_file("examples/curves/sample_phh.csv")
+x = torch.tensor([0.2, 1.0, 1.8, 1.0, 0.2], requires_grad=True)
+y, state_history = layer.forward_sequence(x, initial_state=False)
+y.sum().backward()
+```
+
+输入达到 `upper_threshold` 时切到高态并采用 `down` 分支；输入降到
+`lower_threshold` 时回到低态并采用 `up` 分支；两阈值之间保留传入状态。状态不会悄悄
+存进模块，因此批处理、重置和复现实验都更明确。完整语义见
+[docs/hysteresis.md](docs/hysteresis.md)。
+
 ## 建议的学习顺序
 
-1. 运行 [examples/minimal.py](examples/minimal.py)，观察输出和梯度。
-2. 阅读 `photonact/curves.py`，理解 CSV/JSON 如何变成曲线对象。
-3. 阅读 `photonact/activations/curve.py`，理解分段线性插值。
-4. 修改 `sample_phh.csv` 中的一个输出值，再运行示例。
-5. 阅读 `tests/test_curves.py`，学习如何验证梯度和边界行为。
+1. 运行 [examples/minimal.py](examples/minimal.py)，观察单分支输出和梯度。
+2. 运行 [examples/hysteresis.py](examples/hysteresis.py)，观察状态在上下阈值处切换。
+3. 阅读 `photonact/curves.py`，理解 CSV/JSON 如何变成曲线对象。
+4. 修改 `sample_phh.csv` 中的一个输出值，再运行两个示例。
+5. 阅读 `tests/test_curves.py` 和 `tests/test_hysteresis.py`，理解边界与梯度验证。
 
 ## 数据格式
 
@@ -58,9 +77,21 @@ v0.0.1 使用可微的分段线性插值，因为它比高阶样条更容易阅�
 选择分支；超出范围可选择 `clamp`、`linear` 或 `error`。
 
 相关论文 [*Optical Bistability in Photonic Topological Hypercrystals and Its Applications in
-Photonic Neural Network*](https://doi.org/10.3390/nano16090561) 的底层曲线数据暂未公开，因此
-本项目不附带论文曲线，也不声称复现论文准确率。
+Photonic Neural Network*](https://doi.org/10.3390/nano16090561) 是本项目的研究动机之一。
+仓库不附带该论文的底层曲线数据，也不声称复现论文准确率。
 `sample_phh` 仅用于展示接口，使用自己的数据时必须如实记录测量、仿真或数字化来源。
+
+合法持有 Fig. 4(b) 源工作簿的作者，可以在本地转换数据：
+
+```bash
+python -m pip install -e ".[data]"
+python scripts/prepare_phh_1535nm.py path/to/shuangwentiai.xlsx
+python examples/hysteresis.py --curve local_data/phh_1535nm/phh_1535nm.csv
+```
+
+脚本不会改动源工作簿，会记录源文件 SHA-256、来源、波长、偏振、跃迁区间和输出功率
+计算方式。默认输出目录 `local_data/` 已被 Git 忽略。在全体相关作者或权利人确认数据
+许可证前，不要把生成文件公开提交。
 
 ## 项目边界
 

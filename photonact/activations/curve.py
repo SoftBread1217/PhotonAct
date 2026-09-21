@@ -68,6 +68,8 @@ class CurveActivation(nn.Module):
 
     def forward(self, values: Tensor) -> Tensor:
         """Interpolate values with piecewise-constant, meaningful gradients."""
+        if not bool(torch.isfinite(values).all()):
+            raise ValueError("Activation input must be finite")
         original_dtype = values.dtype
         x = self.x_points.to(dtype=values.dtype)
         y = self.y_points.to(dtype=values.dtype)

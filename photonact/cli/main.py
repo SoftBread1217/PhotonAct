@@ -15,8 +15,9 @@ def resolve_curve_path(value: str) -> Path:
     path = Path(value)
     if path.exists():
         return path
-    if value == "sample_phh":
-        return Path(__file__).parents[1] / "data" / "sample_phh.csv"
+    bundled = Path(__file__).parents[1] / "data" / f"{value}.csv"
+    if value in {"sample_phh", "phh_1535nm"} and bundled.exists():
+        return bundled
     raise FileNotFoundError(f"Curve not found: {value}")
 
 
@@ -40,6 +41,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         "branches": sorted(set(curve.branch)),
         "input_range": [min(curve.input_power), max(curve.input_power)],
         "output_range": [min(curve.output_power), max(curve.output_power)],
+        "hysteresis_thresholds": (
+            [curve.metadata.lower_threshold, curve.metadata.upper_threshold]
+            if curve.metadata.lower_threshold is not None
+            else None
+        ),
     }
     print(json.dumps(summary, indent=2))
     return 0

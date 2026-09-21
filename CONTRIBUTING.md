@@ -10,6 +10,10 @@ as measured, simulated, digitized, or synthetic. Do not submit private, restrict
 data. Future benchmark claims must include configuration, seeds, raw results, environment metadata,
 and a script that regenerates them.
 
+Derived files are not automatically redistributable merely because a contributor can access the
+source data or co-authored a paper. Obtain the required author or rights-holder approval, choose an
+explicit data license, and remove personal or confidential metadata before opening a pull request.
+
 Use type annotations and short docstrings for public APIs. Do not commit datasets, weights, caches,
 or benchmark output. By contributing code, you agree that it is licensed under MIT; data may declare
 a separate compatible license in its metadata.

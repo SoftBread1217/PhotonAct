@@ -54,6 +54,43 @@ def test_multibranch_requires_selection():
         CurveActivation(curve)
 
 
+@pytest.mark.parametrize(
+    "metadata",
+    [
+        {"lower_threshold": 0.5},
+        {"lower_threshold": 1.5, "upper_threshold": 0.5},
+        {"lower_threshold": -0.1, "upper_threshold": 0.5},
+    ],
+)
+def test_hysteresis_threshold_metadata_is_complete_and_ordered(tmp_path, metadata):
+    path = tmp_path / "curve.json"
+    path.write_text(
+        json.dumps(
+            {
+                "metadata": metadata,
+                "points": [
+                    {"input_power": 0, "output_power": 0},
+                    {"input_power": 1, "output_power": 1},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="threshold"):
+        load_curve(path)
+
+
+def test_curve_rejects_nonfinite_points(tmp_path):
+    path = tmp_path / "curve.json"
+    path.write_text(
+        '[{"input_power": 0, "output_power": 0}, '
+        '{"input_power": 1, "output_power": "NaN"}]',
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="finite"):
+        load_curve(path)
+
+
 def test_gradcheck():
     curve = load_curve("examples/curves/sample_phh.csv").select_branch("up")
     activation = CurveActivation(curve).double()

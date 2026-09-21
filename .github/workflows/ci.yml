@@ -41,6 +41,8 @@ jobs:
         run: pytest
       - name: Run minimal backward example
         run: python examples/minimal.py
+      - name: Run explicit-state hysteresis example
+        run: python examples/hysteresis.py
       - name: Inspect bundled curve
         run: photonact inspect examples/curves/sample_phh.csv
       - name: Build wheel

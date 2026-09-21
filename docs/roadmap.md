@@ -28,11 +28,16 @@ Current foundation:
 Before v0.1, add user-facing error examples, stabilize the curve-data specification, and publish a
 small release with complete author and citation metadata.
 
-## v0.1 - Hysteresis Semantics
+## v0.1 - Hysteresis Semantics (release validation)
 
-Define separate APIs for a stateless selected branch and a stateful hysteresis trajectory. Document
-the state-transition rule and reset behavior. Test increasing, decreasing, reversing, batched, and
-serialized trajectories, including gradient behavior away from switching points.
+- separate `CurveActivation` and explicit-state `HysteresisActivation` APIs;
+- deterministic lower/upper threshold transitions and documented reset behavior;
+- increasing, decreasing, reversing, batched, serialized, and gradient tests;
+- metadata for data kind, response quantity, wavelength, polarization, and thresholds; and
+- a deterministic, Git-ignored workflow for preparing legitimately held Figure 4(b) workbook data.
+
+The implementation is complete locally. Public release still requires the normal CI/build checks;
+publishing any derived research data separately requires an approved data license.
 
 ## v0.2 - Hardware Effects
 

@@ -6,10 +6,25 @@ All notable changes to PhotonAct are documented in this file. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Explicit-state `HysteresisActivation` with deterministic lower/upper threshold switching,
+  time-major sequence evaluation, batched state, autograd, and serialized threshold buffers.
+- Curve metadata for data kind, response quantity, wavelength, polarization, and hysteresis
+  thresholds, with finite-value and range validation.
+- A deterministic, local-only converter for the legitimately held Figure 4(b) source workbook,
+  including provenance hashes and transmittance-to-output-power conversion.
+- Hysteresis documentation, example, and tests for switching, reversal, batching, gradients,
+  serialization, and workbook parsing.
+
+### Changed
+
+- Reject non-finite curve points and activation inputs.
+- Mark bundled `sample_phh` data explicitly as synthetic and add demonstration thresholds.
+
 ### Planned
 
-- Define explicit stateful and stateless hysteresis semantics.
-- Add reproducible comparison benchmarks with auditable raw results.
+- Add reproducible comparison benchmarks with auditable raw results in v0.3.
 
 ## [0.0.1] - 2026-09-20
 

@@ -11,6 +11,7 @@ htmlcov/
 build/
 dist/
 /data/
+/local_data/
 runs/
 work/
 *.pt
