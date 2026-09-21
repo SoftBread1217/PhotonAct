@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">PhotonAct interactive hysteresis explorer preview</title>
+  <desc id="desc">Synthetic up and down response curves with thresholds, current output, branch, and state.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef4ff"/>
+      <stop offset="0.55" stop-color="#fbfcff"/>
+      <stop offset="1" stop-color="#edf9f5"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#2a3d62" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .body{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#12213f}.muted{fill:#68738a}.small{font-size:16px}.label{font-size:15px;fill:#68738a}.value{font-size:24px;font-weight:700}.axis{stroke:#94a0b6;stroke-width:1.5}.grid{stroke:#e8ecf3;stroke-width:1}.threshold{stroke:#ef6c57;stroke-width:2;stroke-dasharray:7 7}.up{fill:none;stroke:#4169e1;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.down{fill:none;stroke:#14a47b;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <rect width="1200" height="650" rx="28" fill="url(#background)"/>
+  <text class="body" x="44" y="58" font-size="38" font-weight="750">PhotonAct curve explorer</text>
+  <text class="body muted" x="44" y="89" font-size="18">See the hysteresis state before using the curve in PyTorch.</text>
+  <rect x="930" y="40" width="226" height="42" rx="21" fill="#eef3ff" stroke="#b9c8ea"/>
+  <text class="body" x="1043" y="67" font-size="15" font-weight="700" text-anchor="middle" fill="#2b4b9c">SYNTHETIC · sample_phh</text>
+
+  <rect x="40" y="122" width="748" height="480" rx="24" fill="#ffffff" stroke="#dce2ee" filter="url(#shadow)"/>
+  <rect x="66" y="148" width="160" height="40" rx="10" fill="#ffffff" stroke="#c9d2e2"/>
+  <text class="body" x="146" y="174" font-size="15" text-anchor="middle">Output power</text>
+  <rect x="240" y="148" width="176" height="40" rx="10" fill="#12213f"/>
+  <text x="328" y="174" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#ffffff">Run one full scan</text>
+  <rect x="430" y="148" width="112" height="40" rx="10" fill="#ffffff" stroke="#c9d2e2"/>
+  <text class="body" x="486" y="174" font-size="15" font-weight="650" text-anchor="middle">Reset</text>
+
+  <line class="grid" x1="104" y1="228" x2="742" y2="228"/>
+  <line class="grid" x1="104" y1="300" x2="742" y2="300"/>
+  <line class="grid" x1="104" y1="372" x2="742" y2="372"/>
+  <line class="grid" x1="104" y1="444" x2="742" y2="444"/>
+  <line class="grid" x1="104" y1="516" x2="742" y2="516"/>
+  <line class="grid" x1="104" y1="228" x2="104" y2="516"/>
+  <line class="grid" x1="263.5" y1="228" x2="263.5" y2="516"/>
+  <line class="grid" x1="423" y1="228" x2="423" y2="516"/>
+  <line class="grid" x1="582.5" y1="228" x2="582.5" y2="516"/>
+  <line class="grid" x1="742" y1="228" x2="742" y2="516"/>
+  <line class="axis" x1="104" y1="516" x2="742" y2="516"/>
+  <line class="axis" x1="104" y1="228" x2="104" y2="516"/>
+
+  <line class="threshold" x1="295" y1="218" x2="295" y2="516"/>
+  <line class="threshold" x1="551" y1="218" x2="551" y2="516"/>
+  <text x="295" y="212" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#b34a38">lower 0.6</text>
+  <text x="551" y="212" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#b34a38">upper 1.4</text>
+
+  <polyline class="up" points="104,516 232,503 359,478 487,420 614,286 742,228"/>
+  <polyline class="down" points="104,516 232,490 359,414 487,292 614,247 742,228"/>
+  <circle cx="614" cy="247" r="10" fill="#ffffff" stroke="#12213f" stroke-width="4"/>
+
+  <text class="body muted" x="423" y="560" font-size="15" text-anchor="middle">Input power (normalized)</text>
+  <text class="body muted" x="31" y="372" font-size="15" text-anchor="middle" transform="rotate(-90 31 372)">Output power (normalized)</text>
+  <line x1="112" y1="582" x2="144" y2="582" stroke="#4169e1" stroke-width="5" stroke-linecap="round"/>
+  <text class="body muted" x="154" y="588" font-size="15">up scan / low state</text>
+  <line x1="350" y1="582" x2="382" y2="582" stroke="#14a47b" stroke-width="5" stroke-linecap="round"/>
+  <text class="body muted" x="392" y="588" font-size="15">down scan / high state</text>
+
+  <rect x="810" y="122" width="350" height="480" rx="24" fill="#ffffff" stroke="#dce2ee" filter="url(#shadow)"/>
+  <text class="body" x="838" y="164" font-size="17" font-weight="700">Current operating point</text>
+  <text class="body value" x="1132" y="164" text-anchor="end">1.60</text>
+  <line x1="838" y1="190" x2="1132" y2="190" stroke="#dce2ee"/>
+
+  <rect x="834" y="218" width="140" height="92" rx="16" fill="#f4f7fb"/>
+  <text class="body label" x="852" y="244">Output</text>
+  <text class="body value" x="852" y="282">0.84</text>
+  <rect x="990" y="218" width="140" height="92" rx="16" fill="#f4f7fb"/>
+  <text class="body label" x="1008" y="244">Branch</text>
+  <text class="body value" x="1008" y="282">down</text>
+  <rect x="834" y="326" width="296" height="88" rx="16" fill="#effaf6"/>
+  <text class="body label" x="852" y="352">Explicit state</text>
+  <text x="852" y="390" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="750" fill="#108565">HIGH</text>
+
+  <text class="body" x="838" y="458" font-size="16" font-weight="700">What this proves</text>
+  <circle cx="844" cy="487" r="4" fill="#4169e1"/>
+  <text class="body muted small" x="858" y="493">threshold switching is visible</text>
+  <circle cx="844" cy="519" r="4" fill="#4169e1"/>
+  <text class="body muted small" x="858" y="525">branch selection is explicit</text>
+  <circle cx="844" cy="551" r="4" fill="#4169e1"/>
+  <text class="body muted small" x="858" y="557">curve data stays in your browser</text>
+  <text x="600" y="628" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" text-anchor="middle" fill="#68738a">Preview uses the bundled CC0 synthetic curve — no paper or private experimental data.</text>
+</svg>

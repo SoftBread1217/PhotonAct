@@ -39,7 +39,7 @@ small release with complete author and citation metadata.
 The implementation, documentation, tests, and package build are complete. Publishing any derived
 research data separately still requires an approved data license.
 
-## v0.1.1 - Local Curve Explorer (in development)
+## v0.1.1 - Local Curve Explorer (complete)
 
 - generate a self-contained, dependency-free browser explorer from any valid hysteresis curve;
 - show both scan branches, physical units, thresholds, active state, and an interpolated operating
@@ -48,7 +48,8 @@ research data separately still requires an approved data license.
 - keep private curve data local while making the generic generator, synthetic example, and tests
   public.
 
-This patch release will be tagged only after the private real-data experience has been reviewed.
+The generic explorer, synthetic preview, documentation, tests, and installed-wheel smoke test are
+complete. Private real-data validation confirmed the workflow without publishing the data.
 
 ## v0.2 - Hardware Effects
 

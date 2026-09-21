@@ -4,18 +4,34 @@
 hysteresis-aware PyTorch activation functions.**
 
 [![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SoftBread1217/PhotonAct?display_name=tag&sort=semver)](https://github.com/SoftBread1217/PhotonAct/releases/latest)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Research](https://img.shields.io/badge/research-10.3390%2Fnano16090561-6f42c1)](https://doi.org/10.3390/nano16090561)
 
-![PhotonAct workflow](assets/workflow.svg)
+[中文说明](README_zh.md) · [Curve format](docs/curve_data.md) ·
+[Hysteresis semantics](docs/hysteresis.md) · [Roadmap](docs/roadmap.md)
+
+![PhotonAct interactive curve explorer using the bundled synthetic example](assets/demo-preview.svg)
+
+| Inspect a curve | Explore hysteresis | Use it in a model |
+| --- | --- | --- |
+| Validate units, provenance, ranges, branches, and thresholds. | Drag the input or run a full scan in a local browser page. | Wrap a branch or explicit-state loop as a differentiable `torch.nn.Module`. |
+
+## Quick Start
 
 ```bash
+git clone https://github.com/SoftBread1217/PhotonAct.git
+cd PhotonAct
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
 photonact demo sample_phh
-python examples/minimal.py
-python examples/hysteresis.py
 ```
+
+The last command opens a self-contained local page. Try one full scan, then switch the displayed
+quantity or replace `sample_phh` with your own documented CSV/JSON curve.
+
+## Use in PyTorch
 
 ```python
 import torch
@@ -27,11 +43,9 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-> **Status:** v0.1.0 is the stable release; v0.1.1 is under development with a local interactive
-> curve explorer. The core is tested on Python 3.10-3.12. The bundled `sample_phh` curve is
-> synthetic demonstration data, not experimental data and not digitized from a paper.
-
-[中文说明](README_zh.md)
+**Current release: v0.1.1.** The core and installed wheel are tested on Python 3.10-3.12. The
+bundled `sample_phh` curve is synthetic demonstration data, not experimental data and not digitized
+from a paper.
 
 ## Why PhotonAct
 
@@ -41,6 +55,8 @@ PyTorch model. PhotonAct provides the smallest useful bridge:
 ```text
 documented CSV or JSON -> validated branches -> torch.nn.Module -> autograd
 ```
+
+![PhotonAct workflow from curve data to PyTorch autograd](assets/workflow.svg)
 
 It does not include an electromagnetic simulator and does not invent unavailable device data.
 

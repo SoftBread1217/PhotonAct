@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use PhotonAct, cite this software and cite the source of your device data separately."
 title: "PhotonAct"
 type: software
-version: 0.1.0
+version: 0.1.1
 date-released: "2026-09-21"
 license: MIT
 authors:

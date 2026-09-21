@@ -45,6 +45,8 @@ jobs:
         run: python examples/hysteresis.py
       - name: Inspect bundled curve
         run: photonact inspect examples/curves/sample_phh.csv
+      - name: Generate local interactive demo
+        run: photonact demo sample_phh --output /tmp/photonact-demo.html --no-open
       - name: Build wheel
         if: matrix.python-version == '3.12'
         run: |
@@ -57,3 +59,4 @@ jobs:
           /tmp/photonact-wheel-smoke/bin/python -m pip install --no-deps --force-reinstall dist/*.whl
           cd /tmp
           /tmp/photonact-wheel-smoke/bin/python -m photonact inspect sample_phh
+          /tmp/photonact-wheel-smoke/bin/python -m photonact demo sample_phh --output /tmp/installed-demo.html --no-open

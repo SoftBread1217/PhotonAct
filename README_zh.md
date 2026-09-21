@@ -3,24 +3,35 @@
 **PhotonAct 将测量或仿真的光学器件响应曲线转换成可微、支持双稳态轨迹的 PyTorch 激活函数。**
 
 [![CI](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml/badge.svg)](https://github.com/SoftBread1217/PhotonAct/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SoftBread1217/PhotonAct?display_name=tag&sort=semver)](https://github.com/SoftBread1217/PhotonAct/releases/latest)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Research](https://img.shields.io/badge/research-10.3390%2Fnano16090561-6f42c1)](https://doi.org/10.3390/nano16090561)
 
-![PhotonAct 工作流程](assets/workflow.svg)
+[English README](README.md) · [曲线格式](docs/curve_data.md) ·
+[双稳态语义](docs/hysteresis.md) · [路线图](docs/roadmap.md)
+
+![PhotonAct 使用内置合成曲线的交互体验预览](assets/demo-preview.svg)
+
+| 检查曲线 | 体验双稳态 | 用于模型 |
+| --- | --- | --- |
+| 验证单位、来源、范围、分支和阈值。 | 拖动输入或在本地浏览器运行完整升降扫描。 | 将分支曲线或显式状态回线封装成可微 `torch.nn.Module`。 |
+
+## 60 秒开始体验
 
 ```bash
+git clone https://github.com/SoftBread1217/PhotonAct.git
+cd PhotonAct
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
 photonact demo sample_phh
-python examples/minimal.py
-python examples/hysteresis.py
 ```
 
-> **当前状态：** v0.1.0 是稳定版；v0.1.1 正在开发本地交互曲线体验器。核心功能已在
-> Python 3.10-3.12 上测试。内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，
-> 也不是从论文图片数字化得到的数据。
+最后一条命令会打开一个自包含的本地页面。先运行一次完整扫描，再切换显示量，或者把
+`sample_phh` 替换为你自己的、有来源说明的 CSV/JSON 曲线。
 
-[English README](README.md)
+**当前正式版：v0.1.1。** 核心功能和安装后的 wheel 已在 Python 3.10-3.12 上测试。
+内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，也不是从论文图片数字化得到的数据。
 
 ## 现在能做什么
 
@@ -30,6 +41,8 @@ python examples/hysteresis.py
 单分支响应：CSV/JSON -> CurveActivation -> PyTorch 自动求导
 双稳态轨迹：上下扫描分支 + 阈值 + 上一步状态 -> HysteresisActivation
 ```
+
+![PhotonAct 从曲线数据到 PyTorch 自动求导的流程](assets/workflow.svg)
 
 ```python
 import torch
