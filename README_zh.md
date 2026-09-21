@@ -11,11 +11,12 @@
 ```bash
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
+photonact demo sample_phh
 python examples/minimal.py
 python examples/hysteresis.py
 ```
 
-> **当前状态：** v0.1.0。无状态曲线层和显式状态双稳态层已在
+> **当前状态：** v0.1.0 是稳定版；v0.1.1 正在开发本地交互曲线体验器。核心功能已在
 > Python 3.10-3.12 上测试。内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，
 > 也不是从论文图片数字化得到的数据。
 
@@ -57,13 +58,32 @@ y.sum().backward()
 存进模块，因此批处理、重置和复现实验都更明确。完整语义见
 [docs/hysteresis.md](docs/hysteresis.md)。
 
+## 本地交互体验
+
+运行下面的命令会生成一个自包含 HTML，并在浏览器中打开：
+
+```bash
+photonact demo sample_phh
+```
+
+页面可以拖动输入功率、自动完成一次升降扫描、显示当前分支与状态，并在数据包含
+`transmittance` 列时切换显示输出功率和透射率。体验本地私有论文曲线时运行：
+
+```bash
+photonact demo local_data/phh_1535nm/phh_1535nm.csv --output local_data/phh_1535nm/phh_1535nm_demo.html
+```
+
+生成的 HTML 内嵌了全部绘图数据。源曲线是私有数据时，这个 HTML 也必须保持私有；只有在
+元数据声明的许可证允许时才能分享。无界面环境可加 `--no-open`。
+
 ## 建议的学习顺序
 
-1. 运行 [examples/minimal.py](examples/minimal.py)，观察单分支输出和梯度。
-2. 运行 [examples/hysteresis.py](examples/hysteresis.py)，观察状态在上下阈值处切换。
-3. 阅读 `photonact/curves.py`，理解 CSV/JSON 如何变成曲线对象。
-4. 修改 `sample_phh.csv` 中的一个输出值，再运行两个示例。
-5. 阅读 `tests/test_curves.py` 和 `tests/test_hysteresis.py`，理解边界与梯度验证。
+1. 运行 `photonact demo sample_phh`，先直观看到回线和状态切换。
+2. 运行 [examples/minimal.py](examples/minimal.py)，观察单分支输出和梯度。
+3. 运行 [examples/hysteresis.py](examples/hysteresis.py)，观察状态在上下阈值处切换。
+4. 阅读 `photonact/curves.py`，理解 CSV/JSON 如何变成曲线对象。
+5. 修改 `sample_phh.csv` 中的一个输出值，再运行示例和体验器。
+6. 阅读 `tests/test_curves.py` 和 `tests/test_hysteresis.py`，理解边界与梯度验证。
 
 ## 数据格式
 

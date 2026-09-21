@@ -12,6 +12,7 @@ hysteresis-aware PyTorch activation functions.**
 ```bash
 python -m pip install -e .
 photonact inspect examples/curves/sample_phh.csv
+photonact demo sample_phh
 python examples/minimal.py
 python examples/hysteresis.py
 ```
@@ -26,8 +27,8 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-> **Status:** v0.1.0. The stateless curve layer and the explicit-state hysteresis layer are tested
-> on Python 3.10-3.12. The bundled `sample_phh` curve is
+> **Status:** v0.1.0 is the stable release; v0.1.1 is under development with a local interactive
+> curve explorer. The core is tested on Python 3.10-3.12. The bundled `sample_phh` curve is
 > synthetic demonstration data, not experimental data and not digitized from a paper.
 
 [中文说明](README_zh.md)
@@ -77,6 +78,25 @@ pytest
 ruff check .
 mypy photonact
 ```
+
+## Local Interactive Explorer
+
+Generate a self-contained HTML page and open it in your browser:
+
+```bash
+photonact demo sample_phh
+```
+
+The explorer lets you drag the input power, run a complete up/down scan, see the active branch and
+state, and compare output power with an optional `transmittance` column. For a private local curve:
+
+```bash
+photonact demo local_data/phh_1535nm/phh_1535nm.csv --output local_data/phh_1535nm/phh_1535nm_demo.html
+```
+
+The generated HTML embeds a copy of every plotted point. Keep it private when the source curve is
+private, and share it only under the data license declared in the metadata. Use `--no-open` in CI or
+other non-interactive environments.
 
 ## Curve Data Format
 

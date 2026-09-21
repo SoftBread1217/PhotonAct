@@ -39,6 +39,17 @@ small release with complete author and citation metadata.
 The implementation, documentation, tests, and package build are complete. Publishing any derived
 research data separately still requires an approved data license.
 
+## v0.1.1 - Local Curve Explorer (in development)
+
+- generate a self-contained, dependency-free browser explorer from any valid hysteresis curve;
+- show both scan branches, physical units, thresholds, active state, and an interpolated operating
+  point;
+- support a full automatic scan and optional transmittance visualization; and
+- keep private curve data local while making the generic generator, synthetic example, and tests
+  public.
+
+This patch release will be tagged only after the private real-data experience has been reviewed.
+
 ## v0.2 - Hardware Effects
 
 Add opt-in, seeded models for quantization, noise, finite dynamic range, insertion loss, and drift.

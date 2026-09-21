@@ -12,6 +12,7 @@ build/
 dist/
 /data/
 /local_data/
+/photonact_demo.html
 runs/
 work/
 *.pt

@@ -8,6 +8,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from photonact.curves import load_curve
+from photonact.demo import open_demo, render_demo
 
 
 def resolve_curve_path(value: str) -> Path:
@@ -26,12 +27,33 @@ def _parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
     inspect_parser = subparsers.add_parser("inspect", help="validate and summarize a curve")
     inspect_parser.add_argument("curve")
+    demo_parser = subparsers.add_parser(
+        "demo", help="generate a local interactive hysteresis explorer"
+    )
+    demo_parser.add_argument("curve", nargs="?", default="sample_phh")
+    demo_parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("photonact_demo.html"),
+        help="HTML output path (default: photonact_demo.html)",
+    )
+    demo_parser.add_argument(
+        "--no-open",
+        action="store_true",
+        help="write the HTML without opening a browser",
+    )
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the PhotonAct CLI and return a process exit code."""
     arguments = _parser().parse_args(argv)
+    if arguments.command == "demo":
+        output = render_demo(resolve_curve_path(arguments.curve), arguments.output)
+        print(f"Wrote interactive demo: {output}")
+        if not arguments.no_open:
+            open_demo(output)
+        return 0
     if arguments.command != "inspect":
         raise AssertionError("Unreachable command")
     curve = load_curve(resolve_curve_path(arguments.curve))
