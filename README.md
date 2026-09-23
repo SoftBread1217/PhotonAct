@@ -10,7 +10,8 @@ hysteresis-aware PyTorch activation functions.**
 [![Research](https://img.shields.io/badge/research-10.3390%2Fnano16090561-6f42c1)](https://doi.org/10.3390/nano16090561)
 
 [中文说明](README_zh.md) · [Curve format](docs/curve_data.md) ·
-[Hysteresis semantics](docs/hysteresis.md) · [Roadmap](docs/roadmap.md)
+[Hysteresis semantics](docs/hysteresis.md) · [Hardware effects](docs/hardware_effects.md) ·
+[Roadmap](docs/roadmap.md)
 
 ![PhotonAct interactive curve explorer using the bundled synthetic example](assets/demo-preview.svg)
 
@@ -43,7 +44,7 @@ layer(x).sum().backward()
 print(x.grad)
 ```
 
-**Current release: v0.1.1.** The core and installed wheel are tested on Python 3.10-3.12. The
+**Current release: v0.2.0.** The core and installed wheel are tested on Python 3.10-3.12. The
 bundled `sample_phh` curve is synthetic demonstration data, not experimental data and not digitized
 from a paper.
 
@@ -53,7 +54,7 @@ Researchers often have discrete input/output power points but no simple way to u
 PyTorch model. PhotonAct provides the smallest useful bridge:
 
 ```text
-documented CSV or JSON -> validated branches -> torch.nn.Module -> autograd
+documented CSV, XLSX, or JSON -> validated branches -> torch.nn.Module -> autograd
 ```
 
 ![PhotonAct workflow from curve data to PyTorch autograd](assets/workflow.svg)
@@ -66,13 +67,13 @@ PhotonAct focuses on the boundary between an optical response curve and a machin
 
 - validate documented measured, simulated, digitized, or synthetic curve data;
 - expose the curve as a small, differentiable `torch.nn.Module`;
-- make branch selection, hysteresis state, extrapolation, normalization, and future hardware effects
-  explicit; and
+- make branch selection, hysteresis state, extrapolation, normalization, and optional hardware
+  effects explicit; and
 - provide reproducible benchmarks whose configurations and raw results can be audited.
 
 PhotonAct is not an electromagnetic solver, a substitute for device characterization, or evidence
 that a model matches physical hardware without documented provenance. It does not claim to reproduce
-the motivating paper while that paper's underlying curve data remain unavailable.
+the motivating paper; that paper's underlying curve data are not included in the public package.
 
 ## Installation
 
@@ -115,6 +116,23 @@ private, and share it only under the data license declared in the metadata. Use 
 other non-interactive environments.
 
 ## Curve Data Format
+
+Use `photonact prepare` to convert an external CSV or XLSX table into canonical curve and metadata
+files, with an audit report containing the source SHA-256 and chosen conversion settings. Column
+mapping and provenance are explicit; the source file remains unchanged. For example, prepare the
+bundled synthetic CSV into the Git-ignored `local_data/` directory:
+
+```bash
+photonact prepare examples/curves/sample_phh.csv --output-dir local_data/roundtrip \
+  --name roundtrip --input-column input_power --output-column output_power \
+  --branch-column branch --input-unit normalized_power --output-unit normalized_power \
+  --source-description "Bundled synthetic demonstration" --data-kind synthetic \
+  --license CC0-1.0 --lower-threshold 0.6 --upper-threshold 1.4
+```
+
+For XLSX input, install `.[data]` and specify the sheet plus either a branch column or separate
+up/down column pairs. See [the preparation specification](docs/curve_data.md) for the mapping
+options, explicit transmittance conversion, and validation rules.
 
 CSV files use `input_power`, `output_power`, and an optional `branch` column:
 
@@ -166,6 +184,27 @@ At or above `upper_threshold`, the state switches high and selects the `down` br
 `lower_threshold`, it switches low and selects the `up` branch. Between those thresholds it retains
 the supplied state. See [docs/hysteresis.md](docs/hysteresis.md) for batched inputs, reset behavior,
 and gradient semantics.
+
+## Optional Hardware Effects
+
+Wrap an existing curve or hysteresis activation with `HardwareAwareActivation` and explicitly
+configured `HardwareEffects`. The supported effects are input drift, output-side insertion loss,
+finite output range, quantization, and seeded Gaussian readout noise. All effects are off by default.
+
+```python
+from photonact import CurveActivation, HardwareAwareActivation, HardwareEffects
+
+base = CurveActivation.from_file("examples/curves/sample_phh.csv", branch="up")
+layer = HardwareAwareActivation(
+    base,
+    HardwareEffects(quantization_step=0.1, quantization_gradient="straight_through"),
+)
+```
+
+Run `python examples/hardware_effects.py` for a reproducible synthetic comparison. Effect order,
+units, random-generator usage, and gradient conventions are specified in
+[docs/hardware_effects.md](docs/hardware_effects.md). Example parameters are not device
+calibrations.
 
 ## Interpolation Semantics
 

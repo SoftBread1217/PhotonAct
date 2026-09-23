@@ -27,3 +27,31 @@ figure citations when a publication license permits digitization.
 For hysteresis curves, provide both thresholds or neither. They must be finite, ordered as
 `valid_min <= lower_threshold < upper_threshold <= valid_max`, and have the same physical unit as
 `input_power`. See [hysteresis.md](hysteresis.md) for the state-transition rule.
+
+## Preparing an external table
+
+`photonact prepare` accepts a CSV with named header columns or an XLSX sheet with explicitly
+selected Excel column letters/numbers. It supports a long table with a branch column and a wide
+table with separate up/down input-output column pairs. XLSX input needs
+`python -m pip install -e ".[data]"`. The source is never edited.
+
+```bash
+photonact prepare examples/curves/sample_phh.csv --output-dir local_data/roundtrip \
+  --name roundtrip --input-column input_power --output-column output_power \
+  --branch-column branch --input-unit normalized_power --output-unit normalized_power \
+  --source-description "Bundled synthetic demonstration" --data-kind synthetic \
+  --license CC0-1.0 --lower-threshold 0.6 --upper-threshold 1.4
+```
+
+The command writes `roundtrip.csv`, `roundtrip.meta.json`, and
+`roundtrip.preparation.json`. The report records the source SHA-256 and every conversion option.
+Existing output files are not overwritten. `--sort` explicitly sorts points within each branch;
+otherwise descending or duplicate input values are rejected. For transmittance data, use
+`--transform input-times-transmittance` only when the source column is power transmittance and
+the desired output is input power multiplied by transmittance. The original transmittance is kept
+in the canonical CSV. No smoothing or threshold inference occurs.
+
+For a wide XLSX sweep, select `--sheet`, `--up-input-column`, `--up-output-column`,
+`--down-input-column`, and `--down-output-column`. Add `--start-row` and `--end-row` if the
+worksheet includes headers or footer material. Source, data kind, license, units, and both
+thresholds (when present) must be stated by the caller. Keep private output in `local_data/`.

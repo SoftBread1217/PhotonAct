@@ -9,7 +9,8 @@
 [![Research](https://img.shields.io/badge/research-10.3390%2Fnano16090561-6f42c1)](https://doi.org/10.3390/nano16090561)
 
 [English README](README.md) · [曲线格式](docs/curve_data.md) ·
-[双稳态语义](docs/hysteresis.md) · [路线图](docs/roadmap.md)
+[双稳态语义](docs/hysteresis.md) · [硬件效应](docs/hardware_effects.md) ·
+[路线图](docs/roadmap.md)
 
 ![PhotonAct 使用内置合成曲线的交互体验预览](assets/demo-preview.svg)
 
@@ -30,7 +31,7 @@ photonact demo sample_phh
 最后一条命令会打开一个自包含的本地页面。先运行一次完整扫描，再切换显示量，或者把
 `sample_phh` 替换为你自己的、有来源说明的 CSV/JSON 曲线。
 
-**当前正式版：v0.1.1。** 核心功能和安装后的 wheel 已在 Python 3.10-3.12 上测试。
+**当前正式版：v0.2.0。** 核心功能和安装后的 wheel 已在 Python 3.10-3.12 上测试。
 内置 `sample_phh` 是人工编写的合成演示曲线，不是实验数据，也不是从论文图片数字化得到的数据。
 
 ## 现在能做什么
@@ -100,6 +101,20 @@ photonact demo local_data/phh_1535nm/phh_1535nm.csv --output local_data/phh_1535
 
 ## 数据格式
 
+`photonact prepare` 可把外部 CSV 或 XLSX 表格转换成标准曲线、元数据和来源报告；报告记录
+源文件 SHA-256 和列映射等参数，原文件不会改动。例如先用内置合成曲线体验：
+
+```bash
+photonact prepare examples/curves/sample_phh.csv --output-dir local_data/roundtrip \
+  --name roundtrip --input-column input_power --output-column output_power \
+  --branch-column branch --input-unit normalized_power --output-unit normalized_power \
+  --source-description "Bundled synthetic demonstration" --data-kind synthetic \
+  --license CC0-1.0 --lower-threshold 0.6 --upper-threshold 1.4
+```
+
+读取 XLSX 需先安装 `.[data]`，再明确指定工作表和列。上下扫描分别占用两组列的工作簿也
+支持。详见 [曲线格式说明](docs/curve_data.md)。论文原始数据及转换结果仍保存在本地。
+
 CSV 至少包含 `input_power` 和 `output_power`，可选 `branch`。同一分支内的输入必须严格递增。
 同名 `.meta.json` 可以记录单位、来源、有效范围、归一化状态、许可证和引用信息。详细说明见
 [docs/curve_data.md](docs/curve_data.md)。
@@ -108,6 +123,16 @@ CSV 至少包含 `input_power` 和 `output_power`，可选 `branch`。同一分�
 
 v0.0.1 使用可微的分段线性插值，因为它比高阶样条更容易阅读、测试和解释。多分支曲线必须明确
 选择分支；超出范围可选择 `clamp`、`linear` 或 `error`。
+
+## 可选硬件效应
+
+`HardwareAwareActivation` 可为现有曲线或双稳态激活函数添加输入漂移、输出侧插入损耗、
+输出范围限制、量化和带固定随机种子的读出噪声。默认全部关闭，保持旧版结果。运行
+`python examples/hardware_effects.py` 可比较各项效应和组合效应；示例参数只是合成演示，
+不是对真实器件的标定。参数单位、计算顺序及梯度规则见
+[硬件效应说明](docs/hardware_effects.md)。
+
+## 数据与论文边界
 
 相关论文 [*Optical Bistability in Photonic Topological Hypercrystals and Its Applications in
 Photonic Neural Network*](https://doi.org/10.3390/nano16090561) 是本项目的研究动机之一。

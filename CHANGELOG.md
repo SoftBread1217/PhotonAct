@@ -10,6 +10,23 @@ All notable changes to PhotonAct are documented in this file. The format follows
 
 - Add reproducible comparison benchmarks with auditable raw results in v0.3.
 
+## [0.2.0] - 2026-09-23
+
+### Added
+
+- Generic local CSV/XLSX preparation with explicit long or wide column mapping, optional
+  input-times-transmittance conversion, row diagnostics, a canonical curve, provenance metadata,
+  and a source-hash audit report.
+- Opt-in `HardwareAwareActivation` with explicit input drift, output-side insertion loss, finite
+  output range, quantization, and seeded Gaussian readout noise.
+- A reproducible synthetic example and documentation for effect order, units, gradients, and
+  scientific limitations.
+
+### Changed
+
+- Curve inspection now reports branch ranges and missing provenance warnings.
+- Continuous integration covers XLSX import, effect semantics, and the installed package.
+
 ## [0.1.1] - 2026-09-21
 
 ### Added
@@ -56,7 +73,8 @@ All notable changes to PhotonAct are documented in this file. The format follows
 - English and Chinese documentation, contribution guidance, citation metadata, a security policy,
   and a milestone-based roadmap.
 
-[Unreleased]: https://github.com/SoftBread1217/PhotonAct/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/SoftBread1217/PhotonAct/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/SoftBread1217/PhotonAct/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/SoftBread1217/PhotonAct/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/SoftBread1217/PhotonAct/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/SoftBread1217/PhotonAct/releases/tag/v0.0.1

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "photonact"
-version = "0.1.1"
+version = "0.2.0"
 description = "Turn optical device response curves into differentiable PyTorch activations."
 readme = "README.md"
 requires-python = ">=3.10,<3.13"

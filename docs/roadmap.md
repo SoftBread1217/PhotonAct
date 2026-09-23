@@ -51,11 +51,18 @@ research data separately still requires an approved data license.
 The generic explorer, synthetic preview, documentation, tests, and installed-wheel smoke test are
 complete. Private real-data validation confirmed the workflow without publishing the data.
 
-## v0.2 - Hardware Effects
+## v0.2 - Reproducible Curve Workflow and Hardware Effects (complete)
 
-Add opt-in, seeded models for quantization, noise, finite dynamic range, insertion loss, and drift.
-Every effect must have units or a normalized interpretation, deterministic tests, and a no-effect
-configuration that exactly recovers the v0.1 behavior.
+First, make external CSV/XLSX curves easier to prepare locally with explicit column mapping,
+provenance, units, validation diagnostics, and a source-file hash. Preparation must never silently
+smooth data or infer a physical threshold. The existing Figure 4(b) conversion remains a specialized
+local workflow; its research data is not part of the release.
+
+Then add opt-in models for output quantization, readout noise, finite output range, output-side
+insertion loss, and input drift. Effect order, units, random seed, and gradient behavior must be
+explicit. The no-effect configuration must exactly recover v0.1 behavior. A synthetic example and
+installed-wheel test demonstrate the complete workflow. See [the v0.2.0 release notes](releases/v0.2.0.md)
+for scope and validation.
 
 ## v0.3 - Reproducible Benchmarks
 
@@ -66,5 +73,5 @@ large model weights. Report multiple seeds and avoid claiming reproduction of un
 ## Toward v1.0
 
 Stabilize the curve schema and public Python API, publish migration notes, add broader real-world
-curve examples with compatible licenses, and provide a versioned benchmark report. CIFAR-10 and an
-interactive curve explorer remain optional until the core evidence chain is reliable.
+curve examples with compatible licenses, and provide a versioned benchmark report. CIFAR-10
+remains optional until the core evidence chain is reliable.
